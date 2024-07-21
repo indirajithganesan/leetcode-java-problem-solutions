@@ -1,0 +1,19 @@
+//9.Palindrome Number
+class Solution {
+    public boolean isPalindrome(int x) {// is palindrome is a public method name (int x)this value is return in the last line so that value passed in this parameter and with the help of boolean it gives input true or false 
+        if (x < 0) {// -1<0 = false so x is not negative value that problem is solved
+            return false;//121<0
+        }
+
+        long reversed = 0;
+        long temp = x;// imagine x = 121
+
+        while (temp != 0) {// 121 not equal to 0
+            int digit = (int) (temp % 10);//121 %10 = 1,12%10 = 2,1%10 = 1(here one is less than ten so numerator is the value)
+            reversed = reversed * 10 + digit;//0*10+1= 1,1*10+2 = 12,12*10+1=121
+            temp /= 10;//this is used for convert 121,12,1 temp = temp/10 --> temp = 121/10 = 12,12/10 = 1..
+        }
+
+        return (reversed == x);//x = 121
+    }
+}//o/p = true or false
