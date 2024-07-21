@@ -1,0 +1,14 @@
+//1.TWO SUM
+class Solution {
+    public int[] twoSum(int[] nums, int target) {//n = 5[10,5,20,30,40] target = 30
+        int n = nums.length;
+        for (int i = 0; i < n - 1; i++) {//i = 1; 0<4 ;i = 2
+            for (int j = i + 1; j < n; j++) {//j = 2; j<5;j = 3
+                if (nums[i] + nums[j] == target) {//nums[0]+nums[1] == 15
+                    return new int[]{i, j};// this can return the index value as output like array value
+                }
+            }
+        }
+        return new int[]{}; // This again give reason is if not true in the if statement this compiler to show error without put this line of code
+    }
+}
