@@ -1,0 +1,33 @@
+15. 3Sum
+
+
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+          List<List<Integer>> re = new ArrayList<>();
+          Arrays.sort(nums);//[-4,-1,-1,0,1,2]
+
+          for(int i= 0;i<nums.length-2;i++){//nums.lenth given because we have required triplet(3) digits
+            if(i==0|| (i>0 && nums[i] != nums[i-1])){
+              int left = i+1;//next digit
+              int right = nums.length-1;
+              int target = -nums[i];//for nums current value change to negative for to change 0 so it is easy to find 0 values
+              while(left<right){
+                if(target == nums[left] + nums[right]){//if target come this otherwise performs else
+                    re.add(Arrays.asList(nums[i],nums[left],nums[right]));//add the values
+                    while(left<right &&  nums[left] == nums[left+1])left++;//if any duplicate values to skip that using this condition
+                     while(left<right &&  nums[right] == nums[right-1])right--;//if any duplicate values to skip that using this condition
+                     left++;
+                     right--;
+                }
+            else if(nums[left]+ nums[right]<target){//this for adding two target values and that third value to change to neagative if 0 value is come or not to check that using this elseif
+                 left++;
+              }
+              else{
+                right--;
+              }              
+            }
+          }
+    }
+    return re;
+}
+}
