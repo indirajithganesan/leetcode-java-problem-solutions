@@ -1,0 +1,16 @@
+2942. Find Words Containing Character
+
+class Solution {
+    public List<Integer> findWordsContaining(String[] words, char x) {
+        List<Integer> resultWords = new ArrayList<>();
+        for (int i = 0; i < words.length; i++) {
+            for (char ch : words[i].toCharArray()) {// this ch is break into character by character(['l','e','e','t'] and check one by one to match)
+                if (ch == x) {
+                    resultWords.add(i);
+                    break;
+                }
+            }
+        }
+        return resultWords;
+    }
+}
