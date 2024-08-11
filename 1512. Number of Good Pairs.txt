@@ -1,0 +1,13 @@
+1512. Number of Good Pairs
+
+
+    class Solution {
+        public int numIdenticalPairs(int[] nums) {
+            int count = 0;
+            int[] freq = new int[101];//array from 1 to 100 of values index
+            for (int num : nums)//num = [1,1,1,1]
+                count += freq[num]++;//count = count+freq[num]-->count = 0+fre[1]
+            return count;
+        }
+    }
+
