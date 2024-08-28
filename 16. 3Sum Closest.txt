@@ -1,0 +1,30 @@
+16. 3Sum Closest
+
+
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+             Arrays.sort(nums);//array values to sort because of easy to find the values
+             int ans = nums[0] + nums[1] + nums[2];
+    for(int i =0;i < nums.length - 2;i++)// Here  nums.length to put it gives the same answer but in this code we put nums.length-2 beacause we don't need to go last values of array because it is in sorted array so don't need to go last values
+             {
+              int j = i+1;// consider this as array |i||j||||k| i fist,j second and 
+              int k = nums.length - 1;//k value last
+                 
+     while(j<k){//now change the position of i,j,k with this following loops to perform 
+         int sum = nums[i] + nums[j] + nums[k];
+                     
+         if(Math.abs(sum - target) <= Math.abs(ans - target))
+               ans = sum;//update the answer value with above condition 
+         if(sum == target)
+                return sum;
+         if(sum > target)
+            k -= 1;
+         else
+            j +=1;
+                 }
+    while(i < nums.length - 3 && nums[i+1] == nums[i])//this is for code optimization of searching the unwanted array values e.g(-1,-1,2,4) in this array we first consider -1 as i value next also we consider -1 as i value it is time consuming so to avoid that we can put this optimization code.
+                 i++;
+        }
+     return ans;
+    }
+}
