@@ -1,0 +1,37 @@
+18. 4Sum
+
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> res=new ArrayList<>();
+        Arrays.sort(nums);//sort the array values for easy understanding
+        int n = nums.length;
+        for(int i = 0; i<n-3;i++) {//give the i value
+            if(i>0 && nums[i] == nums[i-1]) continue;//this line is for to avoid the duplicate values of i
+            for(int j = i+1;j<n-2;j++){//give the j value
+                 if(j>i+1 && nums[j] == nums[j-1]) continue;//this line is for to avoid the duplicate values of j
+                 long newTarget = target-((long)nums[i]+nums[j]);//update the new target value
+
+                 long minSum = nums[j+1] +nums[j+2],maxSum = nums[n-1] +nums[n-2];//finding maximum & minimum sum of values
+                 if(maxSum<newTarget)continue;//if we comment this three line code now the code speed is 96% if we comment this 3 line it will become 56%
+                 if(minSum>newTarget)break;
+
+                 int left=j+1,right = n-1;//this approach is apllying the two pointer approach 
+
+                 while(left<right){
+                    long curr = nums[left] + nums[right];
+                    if(curr == newTarget){
+                        res.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right] ));//to add the values in result
+                        while(left<right && nums[left] == nums[left+1]) left++;//This is for the duplication of the values
+                         while(left<right && nums[right] == nums[right-1]) right--;//This is for the duplication of the values
+
+                           left++;right--;
+
+                         }else if(curr<newTarget) left++;
+                         else right--;
+                 
+                 }
+            }
+        }
+        return res;
+    }
+}
