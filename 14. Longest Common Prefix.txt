@@ -1,0 +1,21 @@
+14. Longest Common Prefix
+
+
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+     String ans="";//for returing the final solution
+     Arrays.sort(strs);//It can  sort the array then we can easy to see the common word and compare with 1st and 2nd word to find
+    String first = strs[0];//for first word to get
+    String last = strs[strs.length - 1];//for last word to get
+    for(int i = 0;i<first.length();i++){//search the all words
+       if(first.charAt(i)==last.charAt(i)){//we can search letter by letter
+          ans = ans+first.charAt(i);//store in ans
+       }
+       else{
+        break;
+       }
+           
+    }
+    return ans;
+}
+}
