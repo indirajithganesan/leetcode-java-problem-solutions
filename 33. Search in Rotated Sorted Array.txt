@@ -1,0 +1,41 @@
+33. Search in Rotated Sorted Array
+
+class Solution {
+    public int search(int[] nums, int target) {
+        //Solve this by binary search concept
+         // [4,5,6,7,0,1,2] target 0
+         //   L      M      R(first check middle = target-->left side check if no --> left pointer set after middle  side to check right side)
+        //first we check sanity  means given input is valid or not to check with sanity 
+        if(nums.length == 0)
+           return -1;
+        if(nums.length == 1 && nums[0] == target)//we directly say that is the output
+           return 0;
+
+        //if not in the above condition we use binary search
+       int leftPointer = 0;//we assign two pointer for checking the given array
+       int rightPointer = nums.length - 1; 
+
+       while(leftPointer <= rightPointer){
+            int mid = leftPointer + (rightPointer - leftPointer)/2; //for find mid value formula
+            if(nums[mid] == target)
+               return mid;
+            else if(nums[leftPointer] <= nums[mid]){// 4,5,6,7
+               if(nums[leftPointer] <= target && target <=nums[mid]){
+                  rightPointer = mid -1;//[4,5,6,7,0,1,2] target 0
+                                     // L   R  M      
+               }else{
+                  leftPointer = mid +1 ;
+               }
+            }else{//this part for we can check our target is in right side
+                 if( nums[mid] <= target && target <= nums[rightPointer]){
+                    leftPointer = mid + 1;//[4,5,6,7,0,1,2] target 0
+                                     //        M,L     R 
+               }else{
+                rightPointer = mid - 1;
+            }
+         }
+        }
+               return -1;//Even if did not find any value with coding
+       }
+    }
+ 
