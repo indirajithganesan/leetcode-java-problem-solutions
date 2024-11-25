@@ -1,0 +1,65 @@
+37. Sudoku Solver
+
+import java.util.*;
+
+class Solution {
+
+  public static boolean solveSudoku(char[][] board) {//This contains the board  characters boolean is used to return true function only
+    for (int i = 0; i < 9; i++) {//Traverse the whole board
+      for (int j = 0; j < 9; j++) {
+        if (board[i][j] == '.') {
+
+          for (char c = '1'; c <= '9'; c++) {//We can replace . char by 1 to 9 to check whether the condition satisfy
+            if (isValid(board, i, j, c)) {//In this simply put 1 and then check if it is true then is going to next if condition
+              board[i][j] = c;
+
+              if (solveSudoku(board))//This condtion traverse until the last for true condition
+                return true;
+              else
+                board[i][j] = '.';
+            }
+          }
+
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  public static boolean isValid(char[][] board, int row, int col, char c) {
+    for (int i = 0; i < 9; i++) {
+      if (board[i][col] == c)//In this put any char it is check any same number in a column
+        return false;
+
+      if (board[row][i] == c)//In this put any char it is check any same number in a row
+        return false;
+
+      if (board[3 * (row / 3) + i / 3][3 * (col / 3) + i % 3] == c)//This is used for to check inside 3*3 matrix
+        return false;
+    }
+    return true;
+  }
+
+  public static void main(String[] args) {
+
+   char[][] board= {
+                    {'9', '5', '7', '.', '1', '3', '.', '8', '4'},
+                    {'4', '8', '3', '.', '5', '7', '1', '.', '6'},
+                    {'.', '1', '2', '.', '4', '9', '5', '3', '7'},
+                    {'1', '7', '.', '3', '.', '4', '9', '.', '2'},
+                    {'5', '.', '4', '9', '7', '.', '3', '6', '.'},
+                    {'3', '.', '9', '5', '.', '8', '7', '.', '1'},
+                    {'8', '4', '5', '7', '9', '.', '6', '1', '3'},
+                    {'.', '9', '1', '.', '3', '6', '.', '7', '5'},
+                    {'7', '.', '6', '1', '8', '5', '4', '.', '9'}
+                    };
+    solveSudoku(board);
+
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++)
+        System.out.print(board[i][j] + " ");//This can be used for check any empty box in that board
+      System.out.println();
+    }
+  }
+}
