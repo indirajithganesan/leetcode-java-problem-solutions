@@ -1,0 +1,21 @@
+66. Plus One
+
+class Solution {
+    public int[] plusOne(int[] digits) {
+        for (int i = digits.length - 1; i >= 0; i--) { //for right to left traverse  (123->3 to first check)              
+            if (digits[i] + 1 < 10) {//this if condition for 123 --> 124 for this case
+                digits[i]++;
+                return digits;
+            } 
+            else {
+                digits[i] = 0;//this is for if 129 --> 130 cases
+            }
+        }
+ //the below code is for 9 -->10,99-->100,999-->1000,etc., for this case only
+        digits = new int[digits.length + 1];
+        digits[0] = 1;
+        return digits; 
+
+      }
+   }
+ 
