@@ -1,0 +1,55 @@
+34. Find First and Last Position of Element in Sorted Array
+
+
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+// we can use two binary search (starting and ending index)
+        int[] result = new int[2];//store the array value in result 
+        result[0] = searchStartingIndex(nums, target);
+        result[1] = searchEndingIndex(nums, target);
+        return result;
+    }
+
+    public int searchStartingIndex(int[] nums, int target) {
+
+        int index = -1;//if the given target not in the given in array return -1
+        int start = 0;
+        int end = nums.length - 1;
+
+        while(start <= end) {
+            int midpoint = start + (end - start) / 2;
+
+            if(nums[midpoint] >= target) {//if target is low
+                end = midpoint - 1;
+            } else {
+                start = midpoint + 1;
+            }
+        
+            if(nums[midpoint] == target) index = midpoint;//if midpoint index value = target value
+        }
+        return index;
+
+    }
+
+    public int searchEndingIndex(int[] nums, int target) {
+
+        int index = -1;
+        int start = 0;
+        int end = nums.length - 1;
+
+        while(start <= end) {
+            int midpoint = start + (end - start) / 2;
+
+            if(nums[midpoint] <= target) {
+                start = midpoint + 1;
+            } else {
+                end = midpoint - 1;
+            }
+
+            if(nums[midpoint] == target) index = midpoint;
+    }
+        return index;
+
+    }
+}
+   
