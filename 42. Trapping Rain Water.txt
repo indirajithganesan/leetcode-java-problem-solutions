@@ -1,0 +1,60 @@
+42. Trapping Rain Water
+
+class Solution{
+    /** PSEUDO CODE FOR BETTER UNDERSTANDING
+Total_Unit_Of_Water = 0
+
+for each position
+    calculate left maximum left_MAX[]
+
+for each position
+    calculate right maximum right_MAX[]
+
+for each position
+    max_water at the place = MIN(left_MAX[currentPosition], right_MAX[currentPosition])
+    total_water_at_position = max_water - height[currentPosition]
+    if(total_water_at_position > 0)
+        Total_Unit_Of_Water += total_water_at_position;
+
+TC: O(N)
+SC: O(N)
+
+[0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1] -> height
+[0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3] -> leftMax
+[3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 1] -> rightMax
+
+[0, 1, 1, 2, 2, 2, 2, 3, 2, 2, 2, 1] -> MIN(left_MAX[currentPosition], right_MAX[currentPosition])(take small values from left and right max)
+[0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1] -> height
+[0, 0, 1, 0, 1, 2, 1, 0, 0, 1, 0, 0] -> max_water - height[currentPosition](subtract that above two codes)
+
+Total_Unit_Of_Water = 6;
+**/
+public int trap(int[] height) {
+    if (height.length <= 2) 
+       return 0;
+
+    int[] leftMax = new int[height.length];
+    leftMax[0] = height[0];
+    for (int i = 1; i < height.length; i++) { // left to right maximum(start from 2nd value in array)
+        leftMax[i] = Math.max(height[i], leftMax[i - 1]);//Which value is maximium we can change it into current value
+    }
+
+    int[] rightMax = new int[height.length];
+    rightMax[height.length - 1] = height[height.length - 1];
+    for (int i = height.length - 2; i >= 0; i--) { // right to left maximum
+        rightMax[i] = Math.max(height[i], rightMax[i + 1]);
+    }
+
+    int total_Unit_Of_Water = 0;
+    for (int i = 0; i < height.length; i++) {
+        int water_at_current_position = Math.min(leftMax[i], rightMax[i]) - height[i];//height[i] --> current value
+
+        if (water_at_current_position > 0) 
+            total_Unit_Of_Water += water_at_current_position;//If above 0 value it can be added to the total_Unit_Of_Water
+        
+    
+      }
+    return total_Unit_Of_Water;
+ }
+}
+ 
