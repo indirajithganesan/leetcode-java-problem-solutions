@@ -1,0 +1,44 @@
+51. N-Queens
+
+class Solution {
+    List<List<String>> result;
+    public List<List<String>> solveNQueens(int n) {
+        result = new ArrayList<>();//initialize the result
+        char[][] board = new char[n][n];//chess board size
+        // Filled . in empty cells & calculate how many dots in that
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                board[i][j] = '.';
+            }
+        }
+        List<int[]> queens = new ArrayList<>();//position that all queens
+        dfs(board, 0, queens);//starting from 0th row and to queens position
+        return result;
+    }
+    private void dfs(char[][] board, int r, List<int[]> queens) {//dfs function
+        if (queens.size() == board.length) {// Check if all queens are placed            
+            List<String> rows = new ArrayList<>();// Construct output
+            for (char[] row : board){ //check each row
+            rows.add(new String(row));//add the row
+        }
+            result.add(rows);
+        }        
+        for (int c = 0; c < board.length; c++) {//Try adding the queen
+            if (canAddQueen(r, c, queens)) {
+                board[r][c] = 'Q';//if queen got new place to update the board
+                queens.add(new int[]{r,c});//we need update the queen's list
+                dfs(board, r + 1, queens);//queen's list updated
+                board[r][c] = '.';//to back track and remove the unwanted queens in board
+                queens.remove(queens.size()-1);
+            }
+        }
+    }
+    private boolean canAddQueen(int r,int c,List<int[]>queens) {//to check current row or cloumn position is safe or not
+        for(int[] q : queens) {//check the queens position
+            int dx = Math.abs(r-q[0]);//difference between the row
+            int dy = Math.abs(c-q[1]);//difference between the column
+            if(dx==0 || dy ==0 || dx==dy)    return false;//if same row || same column || same diagonal (return false) other wise return true
+        }
+        return true;
+    }
+}
