@@ -1,0 +1,22 @@
+36. Valid Sudoku
+
+
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        Set  s = new HashSet ();//HashSet is used to check whether the number is occured in the board (once or twice).We create this set object for in that box string and . operator given so we create a object
+        for (int i = 0; i < 9; i++) {//For row to access
+            for (int j = 0; j < 9; j++) {//For column to access
+                char c = board[i][j];//Take the board value to store in c and to check in following condition
+                if (c != '.') {//we check the any  values otherwise . in a board and the below three condition for repeation checking
+                    if(!s.add(c + "in row" + i)||//for row to check(if in s set can't add.To see i value is added or not)
+                    !s.add(c + "in column" + j)||//for column to check
+                    !s.add(c + "in board" + i/3 + "." + j/3)) {//for to check the whole board because it can take 3*3 like many box take as whole box to check(to / by 3)
+                        return false;//If any one is above work return false
+                    }
+                }
+            }
+        }
+        return true;//if not above in the condition we can confirm it cannot be run with repeation so we can return true
+    }
+}
+    
