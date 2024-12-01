@@ -1,0 +1,17 @@
+1346. Check If N and Its Double Exist
+
+class Solution {
+    public boolean checkIfExist(int[] arr) {
+        HashMap<Integer, Integer> map = new HashMap();//Hash map(key,value) to create in this to check whether the twice of the number is present or not in array
+        for (int i = 0; i < arr.length; i++) {
+            map.put(arr[i], i);//inser the elements of array in hash map with put function.arr[i] --> key,i --> value
+        }//with the above code we created hash map next we again traverse and check twice of that number is present or not
+        for (int i = 0; i < arr.length; i++) {
+            if (map.containsKey(2 * arr[i]) && i != map.get(2 * arr[i])) {//containsKey--> This fuction is used to check whether the number is present or not.i != map.get(2 * arr[i])-->This is for index value and that twice number cannot be same. so we can write this condition(key ->0 - 2*0 -0 (in that cannot return that same we taken key value))
+                return true;
+            }
+        }
+        return false;
+    }
+}   
+    
