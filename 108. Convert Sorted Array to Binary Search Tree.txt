@@ -1,0 +1,19 @@
+108. Convert Sorted Array to Binary Search Tree
+
+class Solution {
+    public TreeNode sortedArrayToBST(int[] nums) {
+        if(nums.length == 0) return null;//if length of array 0 return null
+        return getBST(nums, 0, nums.length - 1);//to put int this starting index and ending index of array
+    }
+
+    public TreeNode getBST(int[] nums, int startIdx, int endIdx) {//we insert start index adn end index of array
+        if(startIdx > endIdx) return null;//if start index big return null[10,2,1,0,5,6,7]
+
+        int middleIdx = (startIdx + endIdx) / 2;//to find middle element(root value)
+        TreeNode bst = new TreeNode(nums[middleIdx]);//create our BST and pass the value 
+        bst.left = getBST(nums, startIdx, middleIdx - 1);//left sub tree of middle element
+        bst.right = getBST(nums, middleIdx + 1, endIdx);//right sub tree of middle element
+        return bst;//return that array
+    }
+}
+
