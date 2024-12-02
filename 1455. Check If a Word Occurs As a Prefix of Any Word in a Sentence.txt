@@ -1,0 +1,12 @@
+1455. Check If a Word Occurs As a Prefix of Any Word in a Sentence
+
+class Solution {
+    public int isPrefixOfWord(String sentence, String searchWord) {
+        String[] arr = sentence.split(" ");//This will create the array and split the words into individual characters
+
+        for (int i = 0; i < arr.length; i++) //Traverse the element from 0 to array length
+            if (arr[i].indexOf(searchWord) == 0) //Take search word index and search in a array it be present == 0 means in that search word (first letter index is 0)
+            return i + 1;//If first letter in the search element matches then increase by 1
+        return -1;//If not in the above condition return -1
+    }
+}
