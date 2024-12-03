@@ -1,0 +1,30 @@
+39. Combination Sum
+
+class Solution {
+            public List<List<Integer>> combinationSum(int[] c, int t) {
+                List<List<Integer>> result = new ArrayList<>();//this is created for storing the result in (list integer datatype--><list<Integer>>
+                Arrays.sort(c);//sort the array values
+                back(c,t,0, new ArrayList<>(), result);//back()--> is a method for performing this problem kind of operation and inside() are values.
+                                      //c-->canidates,t -->target,0-->starting index,new ArrayList<>() -->create new array list for ouput we need one more array list
+                return result;
+            }                                                                             
+
+private void back(int c[], int t,int s, List<Integer> cur, List<List<Integer>> result) {//declare that created back method and passing values inside the ()
+                                                              //new ArrayList<>() --> List<Integer> cur(create list name as cur) and result --> List<List<Integer>> result
+   if (t == 0) {
+    result.add(new ArrayList<>(cur));//if 0 we can add that number in result
+    return;
+}
+
+  for (int i = s; i < c.length; i++) {//for traversing the array and s--> starting index of array
+    if (c[i] > t) {//if target value is low than array values e.g : c[i] = [10,20,30] target = 7 to break 
+        break;
+    }
+     //if the above condition is not true then we confirm c[i] value is small
+    cur.add(c[i]);//add c[i] values to cur
+    back(c, t - c[i], i, cur, result);//t-c[i] means e.g : candidates = [2,3,6,7], target = 7 => 7-2 = 5 next c[i]= 3 -> 5- 3 = 2 next we have to check we have to subtract it by with array value then 0 comes if 0 comes it could be handled in aboveif condition ans s instead i means first we need starting index and next we dont need we need only i value
+    cur.remove(cur.size() - 1);//here we back tracking so we need to remove the last element
+   }
+  }
+ }
+
