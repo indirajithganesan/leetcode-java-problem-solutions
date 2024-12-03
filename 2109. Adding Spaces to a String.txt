@@ -1,0 +1,27 @@
+2109. Adding Spaces to a String
+
+import java.util.Arrays;
+import java.util.List;
+
+class Solution {
+    public String addSpaces(String s, int[] spaces) {//string  is increasing order
+        // Convert the int[] to a List<Integer>
+        List<Integer> spaceList = Arrays.stream(spaces).boxed().toList(); 
+
+        int m = s.length();//find the length of given array
+        int n = spaceList.size();//find the size of spaces array
+        StringBuilder res = new StringBuilder();
+        int first = 0;
+        int second = 0;//Take pointer from starting index to ending index
+
+        while (first < m) {//we will run the loop until all the spaces are copied to input
+            if (second < n && first == spaceList.get(second)) {//if space value is low or equal than n we give space
+                res.append(' ');//space
+                second++;//after 1 completion increment of second pointer
+            }
+            res.append(s.charAt(first));//after 1 time complete of loop next first pointer moves to next word
+            first++;//first pointer will move to next character
+        }
+        return res.toString();//After all completion return result(res)
+    }
+}
