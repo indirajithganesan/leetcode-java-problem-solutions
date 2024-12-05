@@ -1,0 +1,41 @@
+46. Permutations
+
+//we solve this question by backtracking concept
+/* swapping function
+  123 -> 132
+  213 -> 231
+  321 -> 312
+  */
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {//create premutations
+        List<List<Integer>> result = new ArrayList<>();//create list with integer data type
+        backtrack(result, nums, 0);//we can call the backtrack function and include that nums -> permute array and 0 ->starting fuction
+        return result;
+    }
+
+    public void backtrack(List<List<Integer>> result, int[] nums, int start) {
+        if (start == nums.length) {
+            result.add(toList(nums));//if above condition is true. we can add the nums to a array
+        } else {
+            for (int i = start; i < nums.length; i++) {
+                swap(i, start, nums);//if not in the above if condition then we can backtrack 
+                backtrack(result, nums, start + 1);
+                swap(i, start, nums);
+            }
+        }
+    }
+
+    public List<Integer> toList(int[] nums) {//convert the nums array into list
+        List<Integer> res = new ArrayList<>();//take a list of integers
+        for (int i : nums) {//iterate the nums array and add to result
+            res.add(i);
+        }
+        return res;
+    }
+
+    public void swap(int i, int j, int[] nums) {//write swap function
+        int temp = nums[i];//swap conditions
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
