@@ -1,0 +1,46 @@
+2337. Move Pieces to Obtain a String
+
+class Solution {
+    private void skipSpaces(String s, int n, int[] pos) {
+        while (pos[0] < n && s.charAt(pos[0]) == '_') {//this is for skip the _ spaces 
+            pos[0]++;
+        }
+    }
+
+    public boolean canChange(String start, String target) {
+        int n = start.length();//find the length of start
+        int first = 0, second = 0;//assign values for first and second (two pointer approach one for one for start and one for target to check character by character)
+        int limitIdx = -1;//index could be -1 previous L are R index present in target index
+
+        int[] firstPos = {first};
+        int[] secondPos = {second};
+
+        while (firstPos[0] < n) {
+            // Skip all spaces
+            skipSpaces(start, n, firstPos);
+            skipSpaces(target, n, secondPos);
+
+            first = firstPos[0];
+            second = secondPos[0];
+
+            if (first == n && second == n) return true;//if reach end of the string it is to be correct we return true
+            if (first == n || second == n || start.charAt(first) != target.charAt(second)) return false;//if we cannot reach we return false
+
+            if (start.charAt(first) == 'L' && (second <= limitIdx || second > first)) {//if L  greater than the limit index and less than  or equal to the first index if it is return false
+                return false;
+            } else if (start.charAt(first) == 'R' && first > second) {//second is greater than or eual to the start index it is also false condition
+                return false;
+            }
+
+            limitIdx = second;//second index is the limit Idx
+            firstPos[0]++;//we increase first and second pos after again loop the process from while loop and next space will be remove
+            secondPos[0]++;
+        }
+
+        // Skip leftover spaces (if any)
+        skipSpaces(start, n, firstPos);
+        skipSpaces(target, n, secondPos);
+
+        return firstPos[0] == n && secondPos[0] == n;//after reach n(last of index ) return that string
+    }
+}
