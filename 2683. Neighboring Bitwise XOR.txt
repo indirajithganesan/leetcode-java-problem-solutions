@@ -1,0 +1,17 @@
+2683. Neighboring Bitwise XOR
+
+//DIFFERENT  NUMBER = 1
+// SAME NUMBER = 0 
+//derived[i] = original[i] ⊕ original[0].
+//derived[i] = original[i] ⊕ original[i + 1]
+//a,b,c,d,e
+//[a^b,b^c,c^d,d^e,e^a]=a^b^b^c^c^d^d^e^e^a(if same element near then we cancel)=0 then return true
+class Solution {
+    public boolean doesValidArrayExist(int[] derived) {
+    int res = 0;
+    for(int i=0;i<derived.length;i++){
+        res ^= derived[i];
+    }    
+    return res == 0;
+    }
+}
