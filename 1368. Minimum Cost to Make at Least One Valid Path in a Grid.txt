@@ -1,0 +1,36 @@
+1368. Minimum Cost to Make at Least One Valid Path in a Grid
+
+class Solution {//Dijkstra
+    private  static final int [][] DIR={{0,1},{0,-1},{1,0},{-1,0}};
+     public int minCost(int[][]grid){
+        final int R = grid.length,C=grid[0].length;
+        int[][]costs = new int[R][C];
+        for(int[] line:costs)
+          Arrays.fill(line,Integer.MAX_VALUE);
+        costs[0][0] = 0;
+        boolean[][] vis=new boolean[R][C];
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);
+        pq.offer(new int[]{0, 0, 0}); // at r, c, with final cost
+       while (!pq.isEmpty()) {
+          int[] now = pq.poll();
+          final int r = now[0], c = now[1];
+          if (vis[r][c]) 
+             continue;
+          vis[r][c] = true;
+          for (int i = 0; i != 4; i++) {
+         int nr = r + DIR[i][0], nc = c + DIR[i][1];
+        if (nr == -1 || nr == R || nc == -1 || nc == C || vis[nr][nc]) 
+           continue;         
+        final int extra = (i == grid[r][c]-1 ? 0 : 1);
+        final int wouldcost = now[2] + extra;
+        if (wouldcost >= costs[nr][nc]) 
+          continue; 
+        costs[nr][nc] = wouldcost;
+        pq.offer(new int[]{nr, nc, wouldcost});
+    }
+}
+//System.out.println(Arrays.toString(costs[0]));
+   return costs[R - 1][C - 1];
+     }
+        
+    }
