@@ -1,0 +1,55 @@
+407. Trapping Rain Water II
+
+/*[ [3,3,3,3,3]
+  [3,2,2,2,3]
+  [3,2,1,2,3]
+  [3,2,2,2,3]
+  [3,3,3,3,3]]*/
+class Solution {
+    public int trapRainWater(int[][] heightMap) {
+        //top - left & bottom-right(with this condition we can conclude the solution)
+        int n=heightMap.length;
+        int m=heightMap[0].length;
+        int vol[][]=new int[n][m];//for store volumes in 2Darray
+        for(int i=0;i<n;i++){
+            vol[i]=Arrays.copyOf(heightMap[i],m);//now we can get input like 2D matrix like above mentioned
+        }
+        boolean flag1=true;//if true(our data is updating) & if false(our data is not updating) then return final solution
+        boolean init = true;
+        while(flag1){
+            flag1= false;
+            //forward pass(top-left)
+            for(int i=1;i<n-1;i++){//this two loop can traverse internal water stored matrix cells
+                 for(int j=1;j<m-1;j++){
+                    int val=Math.max(heightMap[i][j],
+                    Math.min(vol[i-1][j],vol[i][j-1]));
+                    if(init || vol[i][j] > val){// if current volume less then increase[3,3,3,3,3] [3,1,2,2,3] 1->value then we update
+                        vol[i][j] = val;//[3,3,3,3,3] [3,2,2,2,3]
+                        flag1 = true;
+                    }                               
+                 }
+            }
+            init=false;
+            //backward pass(bottom right)(we can't consider first & last row)
+            for(int i=n-2;i>=1;i--){
+                 for(int j=m-2;j>=1;j--){
+                    int val=Math.max(heightMap[i][j],
+                    Math.min(vol[i+1][j],vol[i][j+1]));//vol[i+1][j]->bottom,vol[1][j+1]->right
+                    if(vol[i][j] > val){
+                        vol[i][j] = val;
+                        flag1 = true;
+                    }                               
+                 }
+            }
+        }
+        int ans = 0;
+        for(int i=1;i<n-1;i++){
+            for(int j=1;j<m-1;j++){
+                if(vol[i][j] > heightMap[i][j]){
+                    ans += vol[i][j]- heightMap[i][j];
+                }
+        }
+    }
+    return ans;
+    }
+}
