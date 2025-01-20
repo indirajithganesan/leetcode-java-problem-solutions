@@ -1,0 +1,42 @@
+2661. First Completely Painted Row or Column
+
+class Solution {
+    public int firstCompleteIndex(int[] arr, int[][] mat) {
+        //we can create two arrays for store row and columns
+        //rowcount = [1,1,2]
+        //columncount=[1,3,0]
+        //lastly we can map with that elements
+        int rowLength = mat.length;
+        int colLength = mat[0].length;
+
+        int rowCount[] = new int[rowLength];
+        int colCount[] = new int[colLength];
+
+        Map<Integer,int[]> map= new HashMap<>();
+        for(int i=0;i<rowLength;i++){
+            for(int j=0;j<colLength;j++){
+                int val = mat[i][j];
+                int index[]=new int[2];//size-2
+                index[0]=i;
+                index[1]=j;
+
+               map.put(val,index);
+        }
+    }
+    for(int i=0;i<arr.length;i++){
+        int val = arr[i];//[2,8,7,4,1,3,5,6,9] -->we can insert values from starting
+        int pos[] = map.get(val);
+
+        int row = pos[0];
+        int col = pos[1];
+
+        rowCount[row]++;
+        colCount[col]++;
+
+        if(rowCount[row] == colLength || colCount[col] == rowLength){//if row or column is fill
+            return i;
+        }
+    }
+    return -1;
+}
+}
