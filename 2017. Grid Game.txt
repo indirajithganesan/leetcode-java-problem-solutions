@@ -1,0 +1,27 @@
+2017. Grid Game
+
+import java.util.*;
+
+class Solution {
+    public long gridGame(int[][] grid) {
+        int n = grid[0].length;//No.of.columns
+        if (n < 2) return 0;//it is for single column and single row there is no possible so return 0
+
+        long topSum = 0;
+        for (int val : grid[0]) {//for calculate top sum
+            topSum += val;
+        }
+
+        long bottomSum = 0;
+        long minSum = Long.MAX_VALUE;
+         /*Robo-2 can cover either top or bottom,
+          Since,it too want to maximize it's sum value,
+          So,take max(top sum,bottom sum)*/
+        for (int pp = 0; pp < n; ++pp) {//to choose the minimal parition path for robo choose
+            topSum -= grid[0][pp];
+            minSum = Math.min(minSum, Math.max(topSum, bottomSum));//get the minimal path
+            bottomSum += grid[1][pp];
+        }
+        return minSum;
+    }
+}
