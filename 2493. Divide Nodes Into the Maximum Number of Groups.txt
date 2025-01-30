@@ -1,0 +1,65 @@
+2493. Divide Nodes Into the Maximum Number of Groups
+
+class Solution {
+    Map<Integer, List<Integer>> graph = new HashMap<>();
+    Map<Integer, Integer> data = new HashMap<>(); // min_node, max_step
+    //Construct the graph with adjacency list
+    private void constructGraph(int[][] edges, int n){
+        for(int i=0;i<n;i++){
+            graph.put(i, new ArrayList<>());
+        }
+        
+        for(int[] edge: edges){
+            int n1 = edge[0]-1;
+            int n2 = edge[1]-1;
+            graph.get(n1).add(n2);
+            graph.get(n2).add(n1);
+        }
+    }
+
+    public int magnificentSets(int n, int[][] edges) {
+        int[] distances = new int[n];
+        constructGraph(edges,n);
+
+        Queue<Pair<Integer, Integer>> nodes = new LinkedList<>(); //current node, last node
+        //Find BFS
+        for (int i = 0; i < n; ++i) {
+            Arrays.fill(distances,-1);
+            int step = 0;
+    
+            distances[i] = 0;
+            nodes.add(new Pair(i, -1));
+            int minNode = i;
+            
+            while (true) {
+                int k = nodes.size();
+                if(k==0){
+                    break;
+                }
+                ++step;//Next node only we visit so ++step
+                while (k>0) {
+                    k--;
+                    Pair<Integer, Integer> p = nodes.poll();
+                    int node = p.getKey();//Fetch the adjaceny node
+                    int last = p.getValue();
+                    for (int next: graph.get(node)) {
+                        if (next == last) continue; // prevent going backward(for cycle )
+                        if (distances[next] == -1) { // not visited before
+                            distances[next] = step;
+                            nodes.add(new Pair(next, node));
+                            minNode = Math.min(minNode, next);
+                        } else { // visited before
+                            if ((distances[next] - step) % 2!=0) return -1; // odd cycles
+                        }
+                    }
+                }
+            }
+            data.put(minNode,Math.max(data.getOrDefault(minNode,0), step));
+        }
+        int result = 0;
+        for(Integer key: data.keySet()){
+            result += data.get(key);
+        }
+        return result;
+    }
+};
