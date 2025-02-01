@@ -1,0 +1,13 @@
+3151. Special Array I
+
+class Solution {
+    public boolean isArraySpecial(int[] nums) {
+        int n = nums.length;
+        for (int i = 1; i < n; ++i) {
+            if ((nums[i] % 2) == (nums[i - 1] % 2)) {//If both numbers have odd & odd or even & even we return false
+                return false;
+            }
+        }
+        return true;
+    }
+}
