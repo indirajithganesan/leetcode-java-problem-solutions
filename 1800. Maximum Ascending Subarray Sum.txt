@@ -1,0 +1,24 @@
+1800. Maximum Ascending Subarray Sum
+
+class Solution {
+    public int maxAscendingSum(int[] nums) {//Getting nums array
+        int n = nums.length;
+        int r = 1;//Right pointer
+        int sum = nums[0];//current sum
+        int maxSum = nums[0];//Max sum
+//It will find the current increasing subarray
+        while (r < n) {
+            while (r < n && nums[r] > nums[r - 1]) {
+                sum += nums[r];
+                r++;
+            }
+            //If array value either decreasing or equals to break above loop and execute down this code
+            maxSum = Math.max(maxSum, sum);//Updating the maximum sum if the current maximum is greater
+            if (r < n) {
+                sum = nums[r];//Get new subarray starting index
+            }
+            r++;
+        }
+        return maxSum;
+    }
+}
