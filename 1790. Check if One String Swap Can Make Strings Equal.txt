@@ -1,0 +1,29 @@
+1790. Check if One String Swap Can Make Strings Equal
+
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public boolean areAlmostEqual(String s1, String s2) {
+        if (s1.equals(s2)) return true;//If both strings firstly equal we return true
+
+        int m = s1.length();
+        int n = s2.length();
+
+        int mismatches = 0;
+        List<Character> mismatch = new ArrayList<>();//Storing all mismatched characters into mismatch array list
+        int pos = 0;
+        while (pos < m) {//Parse all the strings
+            if (s1.charAt(pos) != s2.charAt(pos)) {//If mismatch add in the mismatch arraylist
+                mismatch.add(s1.charAt(pos));
+                mismatch.add(s2.charAt(pos));
+                mismatches++;
+            }
+            pos++;
+        }
+        if (mismatch.size() == 4) {//If mismatch size is 4 .Then we compare 1 and 4th,  1 and 2nd
+            return (mismatch.get(0) == mismatch.get(3) && mismatch.get(1) == mismatch.get(2));//If it is equal return true else false
+        }
+        return false;
+    }
+}
