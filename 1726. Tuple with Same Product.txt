@@ -1,0 +1,26 @@
+1726. Tuple with Same Product
+
+import java.util.HashMap;
+class Solution {
+    private int nC2(int n) {
+        return (n * (n - 1)) / 2;
+    }
+
+    public int tupleSameProduct(int[] nums) {//Given nums array
+        int n = nums.length;
+        HashMap<Integer, Integer> freq = new HashMap<>(); // Key as -> product, Values as-> frequency of such pair(a*b)
+       //Find a required pairs of products
+        for (int i = 0; i < n - 1; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                int product = nums[i] * nums[j];
+                freq.put(product, freq.getOrDefault(product, 0) + 1);
+            }
+        }
+        //Iterate all the key and values to store the values and return count
+        int count = 0;
+        for (int frequency : freq.values()) {
+            count += 8 * nC2(frequency);//Formula for finding pairs .This increasing for further any remaining values present to be added(above function called)
+        }
+        return count;
+    }
+}
