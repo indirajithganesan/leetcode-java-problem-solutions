@@ -1,0 +1,24 @@
+2364. Count Number of Bad Pairs
+
+import java.util.HashMap;
+
+class Solution {
+    public long countBadPairs(int[] nums) {//We can give a array
+        long n = nums.length;
+        
+        // Insert & Count matches and add freq where (nums[i] - i) == (nums[j] - j)
+        HashMap<Integer, Integer> freq = new HashMap<>();//
+        long goodPairs = 0;
+        
+        for (int i = 0; i < n; ++i) {
+            int key = nums[i] - i;
+            if (freq.containsKey(key)) {
+                goodPairs += freq.get(key);//If difference between nums[i] - i value to add in frequency map
+            }
+            freq.put(key, freq.getOrDefault(key, 0) + 1);
+        }
+        
+        long badPairs = n * (n - 1) / 2 - goodPairs;//This is the total No.of.pairs - good pairs
+        return badPairs;
+    }
+}
