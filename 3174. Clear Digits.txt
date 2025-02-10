@@ -1,0 +1,17 @@
+3174. Clear Digits
+
+class Solution {
+    public String clearDigits(String s) {//Given the string
+        StringBuilder res = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (c >= '0' && c <= '9') {//If string between 0 to 9 numbers
+                if (res.length() > 0) {
+                    res.deleteCharAt(res.length() - 1);//To delete that last character in a string
+                }
+            } else {
+                res.append(c);//If number not present to append the character
+            }
+        }
+        return res.toString();
+    }
+}
