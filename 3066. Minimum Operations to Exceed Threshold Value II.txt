@@ -1,0 +1,27 @@
+3066. Minimum Operations to Exceed Threshold Value II
+
+
+import java.util.PriorityQueue;
+
+class Solution {
+    public int minOperations(int[] nums, int k) {
+        // Create a min-heap using PriorityQueue
+        PriorityQueue<Long> minheap = new PriorityQueue<>();
+        for (int num : nums) {
+            minheap.add((long) num); // Add all elements to the heap(It is building the min heap array) and we take long to avoid overflow
+        }
+
+        int count = 0; // Counter for the number of operations
+        while (!minheap.isEmpty()) {
+            long min1 = minheap.poll(); // Get the first smallest element
+            if (min1 >= k) {
+                break; // If the smallest element is >= k, stop and return count otherwise below code will be run
+            }
+            long min2 = minheap.poll(); // Otherwise Get the second smallest element
+            // Push the new element into the heap
+            minheap.add(2 * Math.min(min1, min2) + Math.max(min1, min2));//Repeat this process until smallest element is >= k
+            count++; // Increment the operation count
+        }
+        return count;
+    }
+}
