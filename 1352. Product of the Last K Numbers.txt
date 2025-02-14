@@ -1,0 +1,41 @@
+1352. Product of the Last K Numbers
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProductOfNumbers {
+    private List<Integer> stream;
+    private int n;
+    private int lastZeroIdx;//Used for tracking the position of zero
+
+    public ProductOfNumbers() {
+        stream = new ArrayList<>();
+        stream.add(1);//1 will be a prefilled value in a arrayList
+        n = 1;//We start index from 1 because in previous 1 is in 0th index
+        lastZeroIdx = -1;//We can't see any zeros so we will take -1
+    }
+
+    public void add(int num) {
+        if (num == 0) {//If current index is 0
+            lastZeroIdx = n;//Then last index is updated with n value
+        }
+
+        if (stream.get(stream.size() - 1) == 0) {//If previous number is zero we just insert the num value we can't add or product
+            stream.add(num);
+        } else {
+            stream.add(stream.get(stream.size() - 1) * num);//If previous number is not zero we will multiply with previous and update 
+        }
+        n++;//Goto next index
+    }
+
+    public int getProduct(int k) {
+        if (lastZeroIdx >= n - k) {//If last index is large return 0
+            return 0;
+        }
+        if (stream.get(n - k - 1) == 0) {//If previous value of n-k will be zero then return.  what is the product until end
+            return stream.get(n - 1);
+        } else {
+            return stream.get(n - 1) / stream.get(n - k - 1);//If not in above condition to divide and return answer
+        }
+    }
+}
