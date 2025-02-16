@@ -1,0 +1,40 @@
+1718. Construct the Lexicographically Largest Valid Sequence
+
+import java.util.Arrays;
+
+class Solution {
+    private boolean findLargestArray(int[] res, boolean[] used, int pos, int n) {
+        if (pos == 2 * n - 1) return true;//If we going out of bound then we return the final value as solution
+        if (res[pos] != 0) // Already filled
+            return findLargestArray(res, used, pos + 1, n);//Skip the position + 1 if already filled
+
+        // Try assigning all unused values
+        for (int i = n; i >= 1; --i) { // Try forming the largest number
+            if (used[i]) continue;//If already used number continue to next number
+
+            used[i] = true;
+            res[pos] = i;//To place that number is res array
+            if (i == 1 && findLargestArray(res, used, pos + 1, n))//i == 1 is already filled so go next pos+1
+                return true;
+            if (i > 1 && (pos + i) < (2 * n - 1) && res[pos + i] == 0) {//It is like 3---3 to check here present any in that place
+                res[pos + i] = i;
+                if (findLargestArray(res, used, pos + 1, n))//If above are true return true
+                    return true;
+                res[pos + i] = 0;//If above condition is false then remove that number and backtracking with above and find valid numbers
+            }
+            used[i] = false;
+            res[pos] = 0;
+        }
+        return false;
+    }
+
+    public int[] constructDistancedSequence(int n) {
+        int[] res = new int[2 * n - 1];//2*n-1 is a condition for given input and length of array to store values
+        boolean[] used = new boolean[n + 1];
+        Arrays.fill(res, 0);
+        Arrays.fill(used, false);//None of the numbers could be initially so boolean is false
+
+        findLargestArray(res, used, 0, n);//Call above method
+        return res;
+    }
+}
