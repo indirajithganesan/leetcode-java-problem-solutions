@@ -1,0 +1,22 @@
+2375. Construct Smallest Number From DI String
+
+import java.util.Stack;
+
+class Solution {
+    public String smallestNumber(String pattern) {
+        int n = pattern.length();
+        Stack<Integer> st = new Stack<>();
+        StringBuilder res = new StringBuilder();
+
+        for (int i = 1; i <= n + 1; ++i) {
+            st.push(i);//Pushing into the stack.
+            if (i == n + 1 || pattern.charAt(i - 1) == 'I') {//i == n + 1(for index value out of bound & for next element .so curve is increasing we already found the solution & 'I' for(increasing))
+                while (!st.isEmpty()) {
+                    res.append(st.pop());//After seeing elements to popup and delete images
+                }
+            }
+        }
+
+        return res.toString();
+    }
+}
