@@ -1,0 +1,42 @@
+1415. The k-th Lexicographical String of All Happy Strings of Length n
+
+import java.util.*;
+
+class Solution {
+    public String getHappyString(int n, int k) {
+        List<String> sizeN = new ArrayList<>();//For happy string find
+        Queue<String> queue = new LinkedList<>();//To add all the visit elements in the queue
+
+        // Push all start points
+        queue.offer("a");
+        queue.offer("b");
+        queue.offer("c");
+
+        while (!queue.isEmpty()) {//We do it until queue to be empty
+            String curr = queue.poll();//Take front element
+            if (curr.length() == n) {//If both length is equal to add in that sizeN list
+                sizeN.add(curr);
+                continue;
+            }
+
+            // Build next 2 strings
+            char lastChar = curr.charAt(curr.length() - 1);//If above condtion is false(smaller).To update characters without repeated letters
+            //Below are conditions to perform it
+            if (lastChar == 'a') {
+                queue.offer(curr + "b");
+                queue.offer(curr + "c");
+            } else if (lastChar == 'b') {
+                queue.offer(curr + "a");
+                queue.offer(curr + "c");
+            } else {
+                queue.offer(curr + "a");
+                queue.offer(curr + "b");
+            }
+        }
+
+        if (sizeN.size() < k) {//If size is less than k to print empty string
+            return "";
+        }
+        return sizeN.get(k - 1);//Return solution
+    }
+}
