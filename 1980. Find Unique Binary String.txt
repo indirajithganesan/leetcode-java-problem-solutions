@@ -1,0 +1,30 @@
+1980. Find Unique Binary String
+
+import java.util.*;
+class Solution {
+    private String res;
+    private boolean buildNumber(Set<String> numbers, String curr, int n) {
+        if (curr.length() == n) {//While doing recursion.We reach current string size equal to n
+            if (!numbers.contains(curr)) {//If checking string is not present in the set.Return true 
+                res = curr;
+                return true;
+            }
+            return false;//If present,return false
+        }
+        // Try '0'
+        if (buildNumber(numbers, curr + '0', n)) {//Place the 0 at end and call the recursion for further child nodes.If not present return true.Else present return false and remove 0 and update last end as 1
+            return true;
+        }
+        // Try '1'
+        if (buildNumber(numbers, curr + '1', n)) {//Place the 1 at end and call the recursion for further child nodes.If not present return true.Else present return false and remove 1 and update last end as 0
+            return true;
+        }
+        return false;
+    }
+    public String findDifferentBinaryString(String[] nums) {
+        int n = nums.length;
+        Set<String> numbers = new HashSet<>(Arrays.asList(nums));//Push every string into the set
+        buildNumber(numbers, "", n);//That method returns which element is not present in a string
+        return res;
+    }
+}
