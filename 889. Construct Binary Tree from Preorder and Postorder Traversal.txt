@@ -1,0 +1,28 @@
+889. Construct Binary Tree from Preorder and Postorder Traversal
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
+class Solution {
+    private int preIdx = 0;
+    private int postIdx = 0;
+
+    public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
+        TreeNode curr = new TreeNode(preorder[preIdx]);//Creating a new node and left and right pointer set to be null
+        preIdx++;//Then in the given input we can move forward the preindex
+
+        if (curr.val != postorder[postIdx]) {//If current value and post order value not same.Make a left call because it is not a leafnode.So make that as left node
+            curr.left = constructFromPrePost(preorder, postorder);
+        }
+        if (curr.val != postorder[postIdx]) {//Again If current value and post order value not same.Make a right call because it is not a leafnode.So make that as right node
+            curr.right = constructFromPrePost(preorder, postorder);
+        }
+
+        postIdx++;//After done the left and right subtree.Then we increment the postindex
+        return curr;
+    }
+}
