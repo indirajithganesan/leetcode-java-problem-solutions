@@ -1,28 +1,63 @@
-889. Construct Binary Tree from Preorder and Postorder Traversal
+2467. Most Profitable Path in a Tree
 
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    TreeNode(int x) { val = x; }
-}
+import java.util.*;
 
 class Solution {
-    private int preIdx = 0;
-    private int postIdx = 0;
-
-    public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
-        TreeNode curr = new TreeNode(preorder[preIdx]);//Creating a new node and left and right pointer set to be null
-        preIdx++;//Then in the given input we can move forward the preindex
-
-        if (curr.val != postorder[postIdx]) {//If current value and post order value not same.Make a left call because it is not a leafnode.So make that as left node
-            curr.left = constructFromPrePost(preorder, postorder);
+    private boolean findBobPath(List<List<Integer>> adj, int bob, int parent, List<Integer> currPath, List<Integer> bobPath) {
+        if (bob == 0) {
+            bobPath.addAll(currPath);//If bob reach 0 then return true
+            return true;
         }
-        if (curr.val != postorder[postIdx]) {//Again If current value and post order value not same.Make a right call because it is not a leafnode.So make that as right node
-            curr.right = constructFromPrePost(preorder, postorder);
+        //If not reach zero traverse the numbers
+        currPath.add(bob);
+        for (int nbr : adj.get(bob)) {
+            if (nbr != parent && findBobPath(adj, nbr, bob, currPath, bobPath)) {//If find return true
+                return true;
+            }
+        }
+        currPath.remove(currPath.size() - 1);//Not possible to return false
+        return false;
+    }
+
+    private int findMaxIncomeForAlice(List<List<Integer>> adj, int alice, int parent, int[] amount) {
+        int maxIncome = Integer.MIN_VALUE;
+        for (int nbr : adj.get(alice)) {
+            if (nbr != parent) {
+                int income = findMaxIncomeForAlice(adj, nbr, alice, amount);
+                if (income + amount[alice] > maxIncome) {//To find the maximum amount to be taken
+                    maxIncome = income + amount[alice];
+                }
+            }
+        }
+        return maxIncome == Integer.MIN_VALUE ? amount[alice] : maxIncome;
+    }
+
+    public int mostProfitablePath(int[][] edges, int bob, int[] amount) {//It can be a starting point of a bob
+        int n = amount.length;
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) {//Make and add the value of adjacency list
+            adj.add(new ArrayList<>());
+        }
+        for (int[] edge : edges) {
+            adj.get(edge[0]).add(edge[1]);//a is adjacent to b and b is adjacent to a.
+            adj.get(edge[1]).add(edge[0]);
         }
 
-        postIdx++;//After done the left and right subtree.Then we increment the postindex
-        return curr;
+        List<Integer> currPath = new ArrayList<>();
+        List<Integer> bobPath = new ArrayList<>();
+        findBobPath(adj, bob, -1, currPath, bobPath);//Find bob root path
+
+        int size = bobPath.size();
+        int i;
+        for (i = 0; i < size / 2; ++i) {
+            amount[bobPath.get(i)] = 0;
+        }
+        if (size % 2 == 1) {
+            amount[bobPath.get(i)] = 0;//For odd path
+        } else {
+            amount[bobPath.get(i)] /= 2;//For even half the path
+        }
+
+        return findMaxIncomeForAlice(adj, 0, -1, amount);
     }
 }
