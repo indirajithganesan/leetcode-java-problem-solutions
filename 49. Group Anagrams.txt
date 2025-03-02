@@ -1,0 +1,19 @@
+49. Group Anagrams
+
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+        for (String word : strs) {
+            char[] chars = word.toCharArray();
+            Arrays.sort(chars);
+            String sortedWord = new String(chars);
+            if (!map.containsKey(sortedWord)) {
+                map.put(sortedWord, new ArrayList<>());//E.G:"aet" is not in the map, we create a new list and add "eat" to it.
+            }
+            map.get(sortedWord).add(word);//e.g: "aet" is already in the map, so we add "tea" to the list for "aet".
+        }
+        return new ArrayList<>(map.values());
+    }
+}
+/*key                         value
+ sorted word(aet)             [eat],[tea],[ate]*/
