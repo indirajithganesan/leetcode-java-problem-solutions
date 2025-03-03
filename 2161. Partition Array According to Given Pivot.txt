@@ -1,0 +1,40 @@
+2161. Partition Array According to Given Pivot
+
+import java.util.Arrays;
+//Two-Pointer Approach(Fully to cross left until last right and right moves until last of left side)
+class Solution {
+    public int[] pivotArray(int[] nums, int pivot) {
+        int n = nums.length;
+        int[] res = new int[n];
+        //Take left and right pointer
+        int left = 0, right = n - 1;
+        int leftRes = 0, rightRes = n - 1;
+        //Traverse two pointers
+        while (left < n) {
+            //To place left side of smaller elements,lesser than pivot
+            if (nums[left] < pivot) {
+                res[leftRes++] = nums[left];
+            }
+            //To place right side of greater elements,greater than pivot
+            if (nums[right] > pivot) {
+                res[rightRes--] = nums[right];
+            }
+            left++;
+            right--;
+        }
+        //Now fill the pivot element in middle part
+        while (leftRes <= rightRes) {
+            res[leftRes++] = pivot;
+        }
+        
+        return res;
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int[] nums = {9, 12, 5, 10, 14, 3, 10};
+        int pivot = 10;
+        int[] result = solution.pivotArray(nums, pivot);
+        System.out.println(Arrays.toString(result));
+    }
+}
