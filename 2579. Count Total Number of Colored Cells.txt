@@ -1,0 +1,14 @@
+2579. Count Total Number of Colored Cells
+
+class Solution {
+    public long coloredCells(int n) {
+        long count = 1;
+        long jumpSize = 4;//In all 4 gradually increasing and adding with previous terms 
+        while (n > 1) {
+            count += jumpSize;
+            jumpSize += 4;//To increase by 4
+            n--;
+        }
+        return count;
+    }
+}
