@@ -1,0 +1,23 @@
+2965. Find Missing and Repeated Values
+
+class Solution {
+    public int[] findMissingAndRepeatedValues(int[][] grid) {
+        int n = grid.length;
+        int size = n * n;
+        int[] freq = new int[size + 1];
+        int repeated = -1, missing = -1;
+
+        for (int[] row : grid) {
+            for (int num : row) {
+                freq[num]++;//1->1,2->2,3->1,4->0,5->0
+            }
+        }
+
+        for (int num = 1; num <= size; num++) {
+            if (freq[num] == 2) repeated = num;//freq[2]==2 repeated num be taken 
+            if (freq[num] == 0) missing = num;//Missing value could be taken
+        }
+
+        return new int[]{repeated, missing};
+    }
+}
