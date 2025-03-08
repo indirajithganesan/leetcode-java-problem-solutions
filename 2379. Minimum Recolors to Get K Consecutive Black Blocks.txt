@@ -1,0 +1,17 @@
+2379. Minimum Recolors to Get K Consecutive Black Blocks
+
+//Input: blocks = "WBBWWBBWBW", k = 7
+//Output: 3
+class Solution {
+    public int minimumRecolors(String blocks, int k) {
+        int blackCount = 0, ans = Integer.MAX_VALUE;//B.C->4 3 2    ans->6 5 4 3 
+    
+        for (int i = 0; i < blocks.length(); i++) {//0<10 1<10 2<10 3<10 4<10 5<10 6<10 7<10 8<10 9<10
+            if (i - k >= 0 && blocks.charAt(i - k) == 'B') blackCount--;//8
+            if (blocks.charAt(i) == 'B') blackCount++;//0 1 2 5 6  
+            ans = Math.min(ans, k - blackCount);//
+        }
+        
+        return ans;//Lastly ans contains 3 so return 3.
+    }
+}
