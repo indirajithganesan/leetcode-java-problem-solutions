@@ -1,0 +1,45 @@
+3306. Count of Substrings Containing Every Vowel and K Consonants II
+
+//Input: word = "aeioqq", k = 1
+//Output: 0
+class Solution {
+    private boolean isVowel(char c) {
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
+    }
+
+    private long atLeastK(String word, int k) {
+        int n = word.length();//6
+        long ans = 0;//2 3 4
+        int consonants = 0;//2
+        int left = 0;//1
+        HashMap<Character, Integer> vowelMap = new HashMap<>();
+
+        for (int right = 0; right < n; right++) {//0<6 1<6 2<6 3<6 4<6 5>6
+            char c = word.charAt(right);//aeioqq
+            if (isVowel(c)) {
+                vowelMap.put(c, vowelMap.getOrDefault(c, 0) + 1);//a->0,e->1,i->1,o->1,
+            } else {
+                consonants++;
+            }
+
+            while (vowelMap.size() == 5 && consonants >= k) {//5 && 1>=1
+                ans += n - right;//0
+                char leftChar = word.charAt(left);
+                if (isVowel(leftChar)) {
+                    vowelMap.put(leftChar, vowelMap.get(leftChar) - 1);//a->0,e->0,i->0,0->0,u->0
+                    if (vowelMap.get(leftChar) == 0) {
+                        vowelMap.remove(leftChar);
+                    }
+                } else {
+                    consonants--;
+                }
+                left++;
+            }
+        }
+        return ans;
+    }
+
+    public long countOfSubstrings(String word, int k) {
+        return atLeastK(word, k) - atLeastK(word, k + 1);
+    }
+}
