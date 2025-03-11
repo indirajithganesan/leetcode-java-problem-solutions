@@ -1,0 +1,26 @@
+1358. Number of Substrings Containing All Three Characters
+
+/*
+Input: s = "abcabc"
+Output: 10
+"abc", "abca", "abcab", "abcabc", "bca", "bcab", "bcabc", "cab", "cabc" and "abc" (again).
+*/
+class Solution {
+    public int numberOfSubstrings(String s) {
+        int count = 0;//7
+        int left = 0;//1 2 3 4
+        int[] charCount = new int[3];//charCount[0]->0 charCount[1]->1 charCount[2]->0
+
+        for (int right = 0; right < s.length(); right++) {//0<6 1<6 2<6 3<6 4<6 5<6
+            charCount[s.charAt(right) - 'a']++;//0 1 2 0 1 2
+
+            while (charCount[0] > 0 && charCount[1] > 0 && charCount[2] > 0) {//
+                count += s.length() - right;//4 7 9 10
+                charCount[s.charAt(left) - 'a']--;//0 1 2  0
+                left++;
+            }
+        }
+
+        return count;//10
+    }
+}
