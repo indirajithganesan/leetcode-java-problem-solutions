@@ -1,0 +1,28 @@
+451. Sort Characters By Frequency
+
+class Solution {
+    public String frequencySort(String s){
+    char c[] = s.toCharArray();
+    int freq[] = new int[128];
+    for(char ch:c){
+        freq[ch]++;
+    }
+    StringBuilder sb = new StringBuilder();
+    while(true){
+        int max = 0;
+        char max_char = 0;
+        for(int j=0;j<128;j++){
+            if(freq[j]>max){
+                max = freq[j];
+                max_char = (char)j;
+            }
+        }
+        if(max ==0){
+            break;
+        }
+        sb.append(String.valueOf(max_char).repeat(max));
+        freq[max_char] = 0;
+    }
+    return sb.toString();
+}
+}
