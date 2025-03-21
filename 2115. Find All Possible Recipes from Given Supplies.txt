@@ -1,0 +1,48 @@
+2115. Find All Possible Recipes from Given Supplies
+
+import java.util.*;
+
+class Solution {
+    public List<String> findAllRecipes(String[] recipes, List<List<String>> ingredients, String[] supplies) {
+        Map<String, List<String>> adj = new HashMap<>();//For adjacency list
+        Map<String, Integer> indegree = new HashMap<>();//For indegree value
+        Set<String> supply = new HashSet<>(Arrays.asList(supplies));
+
+        // Initialize adjacency list and indegree map
+        for (int i = 0; i < recipes.length; i++) {
+            indegree.put(recipes[i], 0);//If ingredients present in supplier to put 0 
+            for (String ingredient : ingredients.get(i)) {
+                if (!supply.contains(ingredient)) {
+                    adj.computeIfAbsent(ingredient, k -> new ArrayList<>()).add(recipes[i]);
+                    indegree.put(recipes[i], indegree.getOrDefault(recipes[i], 0) + 1);//Otherwise add the count + 1 according to required receipes
+                }
+            }
+        }
+
+        // Initialize queue with recipes that have 0 indegree
+        Queue<String> q = new LinkedList<>();//Push one by one into queue
+        for (Map.Entry<String, Integer> entry : indegree.entrySet()) {
+            if (entry.getValue() == 0) {
+                q.offer(entry.getKey());
+            }
+        }
+
+        // Perform topological sort using Kahn's algorithm
+        List<String> res = new ArrayList<>();
+        while (!q.isEmpty()) {//Until queue will be empty to be processed 
+            String currRecipe = q.poll();//If contains 0 to be delete from queue
+            res.add(currRecipe);//Deleted receipes added in result for answer
+
+            if (adj.containsKey(currRecipe)) {
+                for (String nextRecipe : adj.get(currRecipe)) {
+                    indegree.put(nextRecipe, indegree.get(nextRecipe) - 1);//To decrement the value if requirements in receipe(outgoing edges from recipe)
+                    if (indegree.get(nextRecipe) == 0) {//If any of the indegree reaches  to zero to add in queue
+                        q.offer(nextRecipe);
+                    }
+                }
+            }
+        }
+
+        return res;
+    }
+}
