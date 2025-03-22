@@ -1,0 +1,42 @@
+2685. Count the Number of Complete Components
+
+
+import java.util.*;
+
+class Solution {
+    private void dfs(int curr, int[] nodes, int[] edges, List<List<Integer>> adj, boolean[] visited) {
+        nodes[0]++;//Increment node count 
+        visited[curr] = true;//Mark as visited
+        for (int nbr : adj.get(curr)) {//For neighbour node count(2*e)
+            edges[0]++;//Edges to be incremented
+            if (!visited[nbr]) {//If not visited again do DFS
+                dfs(nbr, nodes, edges, adj, visited);
+            }
+        }
+    }
+
+    public int countCompleteComponents(int n, int[][] edges) {
+        List<List<Integer>> adj = new ArrayList<>();//For adjacency list
+        for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<>());//Adjacency list elements to be added
+        }
+        //Undirected graph for both edges at same vertex
+        for (int[] edge : edges) {
+            adj.get(edge[0]).add(edge[1]);
+            adj.get(edge[1]).add(edge[0]);
+        }
+        int completeComponents = 0;
+        boolean[] visited = new boolean[n];
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {//It is a new node
+                int[] nodes = new int[1];
+                int[] edgesCount = new int[1];
+                dfs(i, nodes, edgesCount, adj, visited);//Apply DFS
+                if (edgesCount[0] == nodes[0] * (nodes[0] - 1)) {//Check this condition is true then we increment completecomponents
+                    completeComponents++;
+                }
+            }
+        }
+        return completeComponents;
+    }
+}
