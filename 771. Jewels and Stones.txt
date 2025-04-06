@@ -1,0 +1,15 @@
+771. Jewels and Stones
+
+class Solution {
+    public int numJewelsInStones(String jewels, String stones) {
+      int freq[] = new int[128];
+      for(char c : stones.toCharArray()){
+        freq[c]++;//a->  A->2 b->4
+      }  
+      int sum = 0;
+    for(char c : jewels.toCharArray()){
+        sum += freq[c]++;//sum = 1(a) sum = 3(A)
+      }  
+      return sum;
+    }
+}
