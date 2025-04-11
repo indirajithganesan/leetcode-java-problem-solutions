@@ -1,0 +1,15 @@
+344. Reverse String
+
+class Solution{
+public void reverseString(char[]s){
+int left=0,right=s.length-1;//0 , 4
+while(left<right){//0<4 1<3
+    char temp=s[left];//temp="h" temp ="e"
+    s[left]=s[right];//s[0]=s[4] s[1] = s[3]
+    s[right]=temp;//s[4]="h" s[3] = "e"
+    left++;//1 2
+    right--;//3 2
+    //ol l e h
+   }
+ }
+}
