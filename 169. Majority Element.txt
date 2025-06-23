@@ -1,0 +1,10 @@
+169. Majority Element
+
+class Solution {
+    public int majorityElement(int[] nums) {
+        Arrays.sort(nums);//1 1 1 2 2 2 2
+        int n = nums.length;//7
+        return nums[n/2];//7/2 = 3 nums[3] = 2(4 times appeared)
+        //condition n/2 = 3 so majority needs appear more than 3 times so condition true
+    }
+}
