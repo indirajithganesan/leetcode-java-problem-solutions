@@ -1,0 +1,9 @@
+405. Convert a Number to Hexadecimal
+
+import java.util.*;
+class Solution {
+    public String toHex(int num) {
+        String a = Integer.toHexString(num);
+        return a;
+    }
+}
