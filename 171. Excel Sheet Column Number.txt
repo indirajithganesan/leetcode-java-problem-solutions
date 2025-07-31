@@ -1,0 +1,14 @@
+171. Excel Sheet Column Number
+
+class Solution {
+    public int titleToNumber(String columnTitle) {
+        int sum = 0;
+        //int val = 0;
+        if(columnTitle.length()==0) return -1;
+        for(char c: columnTitle.toCharArray()){
+            sum*=26;
+            sum+=1+(c-'A');;
+        }
+        return sum;
+    }
+}
