@@ -1,0 +1,56 @@
+20. Valid Parentheses
+
+class Solution {
+    public boolean isValid(String s) {
+        int cur_open = 0;
+        int cur_close = 0;
+        int sq_open = 0;
+        int sq_close = 0;
+        int par_open = 0;
+        int par_close = 0;
+        
+        // We'll use a stack to track the order of opening brackets
+        Stack<Character> stack = new Stack<>();
+        
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            
+            if(c == '{') {
+                cur_open++;
+                stack.push(c);
+            }
+            else if(c == '}') {
+                cur_close++;
+                if(stack.isEmpty() || stack.pop() != '{') {
+                    return false;
+                }
+            }
+            else if(c == '[') {
+                sq_open++;
+                stack.push(c);
+            }
+            else if(c == ']') {
+                sq_close++;
+                if(stack.isEmpty() || stack.pop() != '[') {
+                    return false;
+                }
+            }
+            else if(c == '(') {
+                par_open++;
+                stack.push(c);
+            }
+            else if(c == ')') {
+                par_close++;
+                if(stack.isEmpty() || stack.pop() != '(') {
+                    return false;
+                }
+            }
+        }
+        
+        // Check if all counts match and the stack is empty (all opened brackets were closed)
+        return (cur_open == cur_close) && 
+               (sq_open == sq_close) && 
+               (par_open == par_close) && 
+               stack.isEmpty();
+    }
+}
