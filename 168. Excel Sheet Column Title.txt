@@ -1,0 +1,17 @@
+168. Excel Sheet Column Title
+
+/*Input: columnNumber = 28
+Output: "AB"*/
+class Solution {
+    public String convertToTitle(int columnNumber) {
+        StringBuilder result = new StringBuilder();
+        while (columnNumber > 0) {//28>0 1>0
+            columnNumber--; // 27 0
+            int remainder = columnNumber % 26;//1 0 
+            char c = (char) ('A' + remainder);//'A'+1=>'B' 'A'
+            result.insert(0, c);//Insert st atart "B"-->"AB"
+            columnNumber /= 26;//1 0
+        }
+        return result.toString();//"AB"
+    }
+}
