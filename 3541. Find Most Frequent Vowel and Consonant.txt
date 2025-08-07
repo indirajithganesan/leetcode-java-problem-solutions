@@ -1,0 +1,27 @@
+3541. Find Most Frequent Vowel and Consonant
+
+class Solution {
+    public int maxFreqSum(String s) {
+        int vow[] = new int[123];
+       // int cons[] = new int[123];
+        int v = 0;
+        int c = 0;
+        for(int i=0;i<s.length();i++){
+            char d = s.charAt(i);
+            vow[d]++;
+        } 
+        for(int i=0;i<123;i++){
+            if(i==97||i==101||i==105||i==111||i==117){
+                if(vow[i]>v){
+                v = vow[i];
+                }
+            }
+            else{
+                if(vow[i]>c){
+                    c = vow[i];
+                }
+            }
+        }
+        return c+v;
+    }
+}
